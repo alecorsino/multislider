@@ -11,13 +11,22 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  ScaleRange scaleRange;
-  SliderMarkCtrl sliderMarkCtrl;
+  ScaleRange scaleRangeMain;
+  ScaleRange scaleRange2;
+  SliderMarkCtrl sliderMarkCtrlMain;
+  SliderMarkCtrl sliderMarkCtrl2;
 
   @override
   void initState() {
-    scaleRange = ScaleRange.forAlignment(min: 0, max: 1000);
-    sliderMarkCtrl = SliderMarkCtrl(scaleRange: scaleRange);
+    scaleRangeMain = ScaleRange.forAlignment(min: 0, max: 100);
+    scaleRange2 = ScaleRange(
+        fromMin: 50,
+        fromMax: 100,
+        toMin: scaleRangeMain.convert(50),
+        toMax: scaleRangeMain.convert(100));
+
+    sliderMarkCtrlMain = SliderMarkCtrl(scaleRange: scaleRangeMain);
+    sliderMarkCtrl2 = SliderMarkCtrl(scaleRange: scaleRange2);
     super.initState();
   }
 
@@ -25,10 +34,13 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return Center(
       child: MultiSlider(
-        scaleRange: scaleRange,
+        scaleRange: scaleRangeMain,
         marks: [
           SliderMark(
-            controller: sliderMarkCtrl,
+            controller: sliderMarkCtrlMain,
+          ),
+          SliderMark(
+            controller: sliderMarkCtrl2,
           )
         ],
       ),
